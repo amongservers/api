@@ -15,18 +15,22 @@ namespace AmongServers.API.Entities
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [Required]
+        [MaxLength(128)]
         [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the IP address.
         /// </summary>
+        [Required]
         [JsonProperty("ipAddress")]
         public string IPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the port.
         /// </summary>
+        [Required]
         [Range(0, 65535)]
         [JsonProperty("port")]
         public string Port { get; set; }
