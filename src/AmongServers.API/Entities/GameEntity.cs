@@ -58,5 +58,12 @@ namespace AmongServers.API.Entities
         [Range(1, 3)]
         [JsonProperty("numImpostors")]
         public int NumImposters { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the game is public.
+        /// </summary>
+        [Required]
+        [JsonProperty("isPublic")]
+        public bool IsPublic { get; set; }
     }
 }
