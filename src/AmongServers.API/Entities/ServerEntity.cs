@@ -9,24 +9,12 @@ namespace AmongServers.API.Entities
     /// <summary>
     /// Defines a server response to the client.
     /// </summary>
-    public class ServerEntity
+    public class ServerEntity : HeartbeatEntity
     {
         /// <summary>
-        /// Gets or sets the name.
+        /// Gets or sets the last heartbeat time for the server.
         /// </summary>
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the IP address.
-        /// </summary>
-        [JsonProperty("ipAddress")]
-        public string IPAddress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the port.
-        /// </summary>
-        [JsonProperty("port")]
-        public string Port { get; set; }
+        [JsonProperty("lastSeenAt")]
+        public DateTimeOffset LastSeenAt { get; set; }
     }
 }

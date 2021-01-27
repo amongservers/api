@@ -21,18 +21,17 @@ namespace AmongServers.API.Entities
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the IP address.
+        /// Gets or sets the IP adress.
         /// </summary>
         [Required]
-        [JsonProperty("ipAddress")]
-        public string IPAddress { get; set; }
+        [JsonProperty("endpoint")]
+        public string Endpoint { get; set; }
 
         /// <summary>
-        /// Gets or sets the port.
+        /// Gets or sets the games.
         /// </summary>
         [Required]
-        [Range(0, 65535)]
-        [JsonProperty("port")]
-        public string Port { get; set; }
+        [JsonProperty("games")]
+        public GameEntity[] Games { get; set; }
     }
 }
