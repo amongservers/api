@@ -42,6 +42,14 @@ namespace AmongServers.API.Entities
         public string Map { get; set; }
 
         /// <summary>
+        /// Gets or sets the current player count.
+        /// </summary>
+        [Required]
+        [Range(0, 10)]
+        [JsonProperty("countPlayers")]
+        public int CountPlayers { get; set; }
+
+        /// <summary>
         /// Gets or sets the max players.
         /// </summary>
         [Required]
