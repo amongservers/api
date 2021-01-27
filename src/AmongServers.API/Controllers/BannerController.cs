@@ -27,8 +27,10 @@ namespace AmongServers.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public BannerEntity[] Index()
+        public BannerEntity[] Index([FromQuery]string version)
         {
+            //TODO: if version is older (current is 0.1.0) send a banner with an update image and URL
+
             if (_cache.TryGetValue("banners", out BannerEntity[] banners))
             {
                 return banners;
