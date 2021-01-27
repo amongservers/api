@@ -51,14 +51,6 @@ namespace AmongServers.API.Entities
         public int MaxPlayers { get; set; }
 
         /// <summary>
-        /// Gets or sets the current player count.
-        /// </summary>
-        [Required]
-        [Range(1, 10)]
-        [JsonProperty("countPlayers")]
-        public int CountPlayers { get; set; }
-
-        /// <summary>
         /// Gets or sets the number of impostors.
         /// </summary>
         [Required]
