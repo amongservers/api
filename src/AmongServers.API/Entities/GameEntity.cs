@@ -22,9 +22,8 @@ namespace AmongServers.API.Entities
         /// <summary>
         /// Gets or sets the name of the host.
         /// </summary>
-        [MaxLength(128)]
-        [JsonProperty("hostPlaer")]
-        public string HostPlayer { get; set; }
+        [JsonProperty("hostPlayer")]
+        public PlayerEntity HostPlayer { get; set; }
 
         /// <summary>
         /// Gets or sets the state.
