@@ -1,6 +1,7 @@
 ﻿using AmongServers.API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 using System;
@@ -41,8 +42,24 @@ namespace AmongServers.API.Controllers
                 return BadRequest("Invalid endpoint");
 
             // If no IP was provided, use the connection IP
-            if (endpoint.Address == IPAddress.Any || endpoint.Address == IPAddress.IPv6Any)
-                endpoint.Address = HttpContext.Connection.RemoteIpAddress;
+            if (endpoint.Address.Equals(IPAddress.Any) || endpoint.Address.Equals(IPAddress.IPv6Any) || IPAddress.IsLoopback(endpoint.Address))
+            {
+                if (HttpContext.Request.Headers.TryGetValue("X-Forwarded-For", out StringValues values))
+                {
+                    // Runs behind an NGINX proxy
+                    if (values.Count > 1)
+                        return BadRequest("Too many forwarded headers!");
+                    endpoint.Address = IPAddress.Parse(values[0].Split(", ")[0]);
+                } else
+                {
+                    endpoint.Address = HttpContext.Connection.RemoteIpAddress;
+                }
+            }
+
+#if DEBUG
+            if (endpoint.Address.ToString() == "::1")
+                endpoint.Address = IPAddress.Loopback;
+#endif
 
             // Save to redis.
             string key = $"{endpoint.Address}:{endpoint.Port}";
@@ -52,9 +69,9 @@ namespace AmongServers.API.Controllers
 
             return NoContent();
         }
-        #endregion
+#endregion
 
-        #region Private Methods
+#region Private Methods
         /// <summary>
         /// TODO: Performs a few basic checks on the client.
         /// </summary>
@@ -63,11 +80,11 @@ namespace AmongServers.API.Controllers
         {
             return true;
         }
-        #endregion
+#endregion
 
-        #region Constructor
+#region Constructor
         public HeartbeatController(IConnectionMultiplexer cache) =>
             (_cache) = (cache);
-        #endregion
+#endregion
     }
 }
